@@ -180,3 +180,68 @@
 .theme-toggle:hover {
   background-color: #555;
 }
+
+body.light {
+  background-color: white;
+  color: black;
+}
+
+body.dark {
+  background-color: black;
+  color: white;
+}
+body.dark h1{
+  color: white;
+}
+
+body.light span,
+body.light strong {
+  color: black;
+}
+
+body.dark span,
+body.dark strong {
+  color: white;
+}
+
+body.light .app-header {
+  background-color: white;
+  color: black;
+}
+
+body.dark .app-header {
+  background-color: #222;
+  color: #fff;
+}
+
+body.light .form-section,
+body.light .contacts-section {
+  background-color: white;
+  color: black;
+}
+
+body.dark .form-section,
+body.dark .contacts-section {
+  background-color: #2a2a2a;
+  color: white;
+}
+
+body.dark input {
+  background-color: black;
+  color: white;
+}
+
+body.light input {
+  background-color: white;
+  color: black;
+}
+
+body.dark .form-actions button {
+  background-color: #555;
+  color: white;
+}
+
+body.light .form-actions button {
+  background-color: white;
+  color: black;
+}

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Contact } from '../types/Contact.tsx'
 
 interface ContactFormProps {
@@ -12,15 +12,32 @@ function ContactForm({ onSubmit, editingContact, onUpdate, onCancelEdit }: Conta
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
 
+  useEffect(() => {
+    if (editingContact) {
+      setName(editingContact.name)
+      setPhone(editingContact.phone)
+    } else {
+      setName('')
+      setPhone('')
+    }
+  }, [editingContact])
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    
-    if (!name.trim() || !phone.trim()) {
+
+    if (!name.trim() || !phone.trim()){
       alert('Por favor complete todos los campos')
       return
     }
-
-    onSubmit({ name: name.trim(), phone: phone.trim() })
+    if (editingContact) {
+      onUpdate({
+        ...editingContact,
+        name: name.trim(),
+        phone: phone.trim(),
+      })
+    } else {
+      onSubmit({ name: name.trim(), phone: phone.trim() })
+    }
     setName('')
     setPhone('')
   }
@@ -37,7 +54,7 @@ function ContactForm({ onSubmit, editingContact, onUpdate, onCancelEdit }: Conta
           placeholder="Ingrese el nombre"
         />
       </div>
-      
+
       <div className="form-group">
         <label htmlFor="phone">Teléfono:</label>
         <input
@@ -48,7 +65,7 @@ function ContactForm({ onSubmit, editingContact, onUpdate, onCancelEdit }: Conta
           placeholder="Ingrese el teléfono"
         />
       </div>
-      
+
       <div className="form-actions">
         <button type="submit">
           Agregar

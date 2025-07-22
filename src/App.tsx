@@ -24,14 +24,21 @@ function App() {
   }
 
   const handleEditContact = (contact: Contact) => {
-    console.log('Editar contacto:', contact)
+    setEditingContact(contact)
   }
 
   const handleUpdateContact = (updatedContact: Contact) => {
-    console.log('Actualizar contacto:', updatedContact)
+    setContacts(contacts.map(c => (c.id === updatedContact.id ? updatedContact : c)))
+    setEditingContact(null)
   }
 
-  const filteredContacts = contacts
+  const filteredContacts = contacts.filter(contact => {
+    const term = searchTerm.toLowerCase()
+    return (
+      contact.name.toLowerCase().includes(term) ||
+      contact.phone.includes(term) 
+    )
+  })
 
   return (
     <div className="app">
@@ -39,11 +46,11 @@ function App() {
         <h1>Agenda de Contactos</h1>
         <ThemeToggle />
       </header>
-      
+
       <main className="app-main">
         <section className="form-section">
           <h2>Agregar Contacto</h2>
-          <ContactForm 
+          <ContactForm
             onSubmit={handleAddContact}
             editingContact={editingContact}
             onUpdate={handleUpdateContact}
@@ -53,11 +60,11 @@ function App() {
 
         <section className="contacts-section">
           <h2>Lista de Contactos</h2>
-          <SearchBar 
+          <SearchBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
           />
-          <ContactList 
+          <ContactList
             contacts={filteredContacts}
             onDelete={handleDeleteContact}
             onEdit={handleEditContact}
